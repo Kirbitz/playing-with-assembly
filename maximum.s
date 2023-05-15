@@ -6,12 +6,14 @@ _start:
   mov rbx, 0 
   mov eax, [0+rbx*4+data_items]
   mov rdi, rax
-
-start_loop:
   cmp rax, 0
   je loop_exit
+
+start_loop:
   inc rbx
   mov eax, [0+rbx*4+data_items]
+  cmp rax, 0
+  je loop_exit
   cmp rax, rdi 
   jle start_loop
   mov rdi, rax
