@@ -16,6 +16,6 @@ Also recommend watching [Low Level Learning](https://www.youtube.com/@LowLevelLe
 
 You may also notice that I am using intel syntax while the book uses AT&T.
 
-The reason for this is that my first assembly code was written while following a video from LLL.
+The reason for this is that the first assembly code I wrote was through following a video from LLL.
 
 I decided to stick with it as it makes me work a little harder to understand what the differences are between the two syntax styles and forces me to understand what is happening under the hood.
