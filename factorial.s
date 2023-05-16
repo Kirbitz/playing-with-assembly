@@ -37,7 +37,7 @@ factorial_loop:
   cmp rbx, 1
   je end_factorial
   dec rbx
-  mov rax, [rsp]
+  mov rax, [rbp-8]
   imul rax, rbx
-  mov [rsp], rax
+  mov [rbp-8], rax
   jmp factorial_loop

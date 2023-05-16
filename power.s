@@ -53,23 +53,23 @@ power:
   cmp rbx, 0
   je zero_base
 
-  mov [rsp], rbx
+  mov [rbp-8], rbx
 
 power_loop_start:
   cmp rcx, 1
   je end_power
-  mov rax, [rsp]
+  mov rax, [rbp-8]
   imul rax, rbx
-  mov [rsp], rax
+  mov [rbp-8], rax
   dec rcx
   jmp power_loop_start
 
 zero_base:
   inc rbx
-  mov [rsp], rbx
+  mov [rbp-8], rbx
 
 end_power:
-  mov rax, [rsp]
+  mov rax, [rbp-8]
   mov rsp, rbp
   pop rbp
   ret
