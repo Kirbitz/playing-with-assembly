@@ -1,3 +1,4 @@
+// testmeoutyou
 .intel_syntax noprefix
 .global _start
 
@@ -75,12 +76,10 @@ read_loop_begin:
   jle end_loop
 
 continue_read_loop:
-  push [BUFFER_DATA]
   push rax
   call convert_to_upper
 
   pop rax
-  add rsp, 8
 
   mov rdx, rax
   mov rdi, [rbp+ST_FD_OUT]
@@ -107,7 +106,6 @@ end_loop:
 .equ CONVERSION_FACTOR, 'A' - 'a'
 
 .equ ST_BUFFER_LEN, 16
-.equ ST_BUFFER, 24
 
 convert_to_upper:
   push rbp
