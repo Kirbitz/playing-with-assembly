@@ -115,7 +115,6 @@ first_letter:
   mov rbx, [rbp+VAR_2]
   mov rdi, 0
 
-
 run_calc:
   mov cl, [BUFFER_DATA+rdi]
 
