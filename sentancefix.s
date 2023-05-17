@@ -3,6 +3,8 @@
 
 // Declase Const Values
 .section .data
+failure_msg:
+  .asciz "Failure Occured!\n"
 // Syscall numbers
 .equ SYS_OPEN, 2
 .equ SYS_READ, 0
@@ -47,6 +49,9 @@ open_files:
     mov rdx, 0666
     syscall
 
+    cmp rax, 0
+    jl failure
+
   store_fd_in:
     mov [rbp+ST_FD_IN], rax
 
@@ -57,6 +62,9 @@ open_files:
     mov rdx, 0666
     syscall
 
+    cmp rax, 0
+    jl failure
+
   store_fd_out:
     mov [rbp+ST_FD_OUT], rax 
 
@@ -66,6 +74,9 @@ read_data_in:
   lea rsi, BUFFER_DATA
   mov rdx, BUFFER_SIZE
   syscall
+
+  cmp rax, 0
+  jl failure
 
   cmp rax, END_OF_FILE
   jle end_loop
@@ -84,6 +95,10 @@ continue_reading_data:
   lea rsi, BUFFER_DATA
   mov rax, SYS_WRITE
   syscall
+
+  cmp rax, 0
+  jl failure
+
   jmp read_data_in
 
 end_loop:
@@ -91,14 +106,33 @@ end_loop:
   mov rdi, [rbp+ST_FD_IN]
   syscall
 
+  cmp rax, 0
+  jl failure
+
   mov rax, SYS_CLOSE
   mov rdi, [rbp+ST_FD_OUT]
   syscall
 
+  cmp rax, 0
+  jl failure
+
   mov rax, SYS_EXIT
-  mov rdi, 1
+  mov rdi, 0 
   syscall
 
+failure:
+  imul rax, -1
+  mov rbx, rax
+
+  mov rax, 1
+  mov rdi, 1
+  lea rsi, failure_msg
+  mov rdx, 17
+  syscall
+
+  mov rdi, rbx
+  mov rax, SYS_EXIT
+  syscall
 
 .equ VAR_1, 16
 .equ VAR_2, 24 
