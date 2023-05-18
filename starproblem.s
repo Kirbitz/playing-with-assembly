@@ -20,6 +20,7 @@ failure_msg:
 // Standard in and out FDs
 .equ STDIN, 0
 .equ STDOUT, 1
+.equ STDERR, 2 
 // Syscalls
 .equ SYS_EXIT, 60
 .equ SYS_READ, 0 
@@ -34,9 +35,13 @@ failure_msg:
 _start:
   mov rax, SYS_WRITE 
   mov rdi, STDOUT
-  lea rsi, prompt 
+  mov rsi, prompt 
   mov rdx, 28
   syscall
+
+  // failure check
+  cmp rax, 0
+  jl failure
 
   mov rax, SYS_READ
   mov rdi, STDIN 
@@ -124,7 +129,7 @@ failure:
   mov rbx, rax
 
   mov rax, SYS_WRITE 
-  mov rdi, STDOUT
+  mov rdi, STDERR 
   lea rsi, failure_msg
   mov rdx, 17
   syscall
