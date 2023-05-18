@@ -11,6 +11,9 @@ space:
 new_line:
   .asciz "\n"
 
+prompt:
+  .asciz "Enter a number [0] to exit: "
+
 failure_msg:
   .asciz "Failure Occured!\n"
 
@@ -29,6 +32,12 @@ failure_msg:
 
 .section .text
 _start:
+  mov rax, SYS_WRITE 
+  mov rdi, STDOUT
+  lea rsi, prompt 
+  mov rdx, 28
+  syscall
+
   mov rax, SYS_READ
   mov rdi, STDIN 
   lea rsi, BUFFER_DATA
