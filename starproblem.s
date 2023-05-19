@@ -35,7 +35,7 @@ failure_msg:
 _start:
   mov rax, SYS_WRITE 
   mov rdi, STDOUT
-  mov rsi, prompt 
+  lea rsi, prompt 
   mov rdx, 28
   syscall
 

@@ -83,6 +83,7 @@ read_data_in:
 
 continue_reading_data:
   push [rbp+PERIOD_FLAG]
+  push offset BUFFER_DATA
   push rax
   call first_letter 
 
@@ -136,6 +137,7 @@ failure:
 
 .equ VAR_1, 16
 .equ VAR_2, 24 
+.equ VAR_3, 32 
 .equ DOT, '.'
 .equ LOWER_A, 'a'
 .equ LOWER_Z, 'z'
@@ -146,11 +148,12 @@ first_letter:
   mov rbp, rsp 
 
   mov rax, [rbp+VAR_1]
-  mov rbx, [rbp+VAR_2]
+  mov rbx, [rbp+VAR_3]
+  mov rdx, [rbp+VAR_2]
   mov rdi, 0
 
 run_calc:
-  mov cl, [BUFFER_DATA+rdi]
+  mov cl, [rdx+rdi]
 
   cmp cl, DOT
   je flip_flag
@@ -162,7 +165,7 @@ run_calc:
   jg next_byte
 
   add cl, CONVERSION
-  mov [BUFFER_DATA+rdi], cl
+  mov [rdx+rdi], cl
   mov rbx, 1
   jmp next_byte
 
